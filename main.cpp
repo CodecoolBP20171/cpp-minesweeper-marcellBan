@@ -23,7 +23,14 @@ namespace {
         }
 
         void countNeighbours() {
-            // step 2 goes here
+            for (auto i = 0; i < height; ++i) {
+                for (auto j = 0; j < width; ++j) {
+                    auto index = i * width + j;
+                    if (table[index] == '.') {
+                        table[index] = getNeighbourCount(i, j);
+                    }
+                }
+            }
         }
 
         void printTable() const {
@@ -36,6 +43,20 @@ namespace {
             for (auto i = 0; i < width * height; ++i) {
                 table[i] = rng() % 100 < 30 ? '*' : '.';
             }
+        }
+
+        char getNeighbourCount(const int y, const int x) const {
+            auto cnt = 0;
+            for (auto i = -1; i <= 1; ++i) {
+                for (auto j = -1; j <= 1; ++j) {
+                    if (i == 0 && j == 0) continue;
+                    auto cy = y + i;
+                    auto cx = x + j;
+                    if (cy < 0 || cx < 0 || cy >= height || cx >= width) continue;
+                    if (table[cy * width + cx] == '*') cnt++;
+                }
+            }
+            return (char)('0' + cnt);
         }
 
         const size_t width, height;
