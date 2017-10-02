@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 
 namespace {
     class Minesweeper {
@@ -31,11 +32,14 @@ namespace {
 
     private:
         void fillTable() {
-            // step 1 goes here
+            std::random_device rng;
+            for (auto i = 0; i < width * height; ++i) {
+                table[i] = rng() % 100 < 30 ? '*' : '.';
+            }
         }
 
         const size_t width, height;
-        char *table;
+        char * table;
     };
 }
 
@@ -45,7 +49,7 @@ int main() {
         ms.printTable();
         ms.countNeighbours();
         ms.printTable();
-    } catch (const std::bad_alloc &e) {
+    } catch (const std::bad_alloc& e) {
         std::cerr << "Couldn't allocate enough memory for minesweeper table" << std::endl;
         return EXIT_FAILURE;
     }
