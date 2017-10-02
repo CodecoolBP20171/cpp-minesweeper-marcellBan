@@ -48,15 +48,16 @@ namespace {
         char getNeighbourCount(const int y, const int x) const {
             auto cnt = 0;
             for (auto i = -1; i <= 1; ++i) {
+                auto cy = y + i;
+                if (cy < 0 || cy >= height) continue;
                 for (auto j = -1; j <= 1; ++j) {
                     if (i == 0 && j == 0) continue;
-                    auto cy = y + i;
                     auto cx = x + j;
-                    if (cy < 0 || cx < 0 || cy >= height || cx >= width) continue;
+                    if (cx < 0 || cx >= width) continue;
                     if (table[cy * width + cx] == '*') cnt++;
                 }
             }
-            return (char)('0' + cnt);
+            return (char) ('0' + cnt);
         }
 
         const size_t width, height;
