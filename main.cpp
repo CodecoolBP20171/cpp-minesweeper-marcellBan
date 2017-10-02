@@ -34,14 +34,20 @@ namespace {
         }
 
         void printTable() const {
-            // step 3 goes here
+            for (auto i = 0; i < height; ++i) {
+                for (auto j = 0; j < width; ++j) {
+                    auto index = i * width + j;
+                    std::cout << table[index] << " ";
+                }
+                std::cout << std::endl;
+            }
         }
 
     private:
         void fillTable() {
             std::random_device rng;
             for (auto i = 0; i < width * height; ++i) {
-                table[i] = rng() % 100 < 30 ? '*' : '.';
+                table[i] = rng() % 100 < 15 ? '*' : '.';
             }
         }
 
@@ -67,7 +73,7 @@ namespace {
 
 int main() {
     try {
-        Minesweeper ms(100, 50);
+        Minesweeper ms(50, 30);
         ms.printTable();
         ms.countNeighbours();
         ms.printTable();
