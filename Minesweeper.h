@@ -26,20 +26,23 @@ public:
     void printTable() const;
     void playGame();
     GameState reveal(int x, int y);
-    void flag(int x, int y);
+    GameState flag(int x, int y, int * bombsRemaining);
 
 private:
     const size_t width, height;
     char * table;
+    int bombCount;
+    int realFlagged;
 
     void fillTable();
     char getNeighbourCount(int y, int x) const;
-    void printPrompt(const Mode& mode) const;
-    bool isHidden(int x, int y) const;
-    bool isFlagged(int x, int y) const;
+    void printPrompt(Mode mode, int bombCount) const;
+    bool isHidden(size_t idx) const;
+    bool isFlagged(size_t idx) const;
     bool isValidFieldValue(char field) const;
     void show(int x, int y);
     void hideTable() const;
+    GameState checkTableForWin() const;
 };
 
 #endif //MINESWEEPER_MINESWEEPER_H
